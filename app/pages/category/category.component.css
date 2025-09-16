@@ -1,0 +1,75 @@
+.card {
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.filter-section {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 1rem 0;
+}
+.price-range-slider {
+    width: 100%;
+}
+.color-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    position: relative;
+}
+.color-circle:hover, .color-circle.active {
+    border-color: #343a40;
+}
+.color-circle.active::after {
+    content: "\f269"; /* bi-check icon */
+    font-family: 'bootstrap-icons';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.color-circle.active.bg-white::after {
+    color: #343a40;
+}
+.size-btn {
+    border-radius: 1.5rem;
+    min-width: 60px;
+    border-color: #e0e0e0;
+    background-color: #f0f0f0;
+    color: #6c757d;
+}
+.size-btn.active {
+    background-color: #343a40;
+    color: white;
+}
+.product-img {
+    height: 250px;
+    object-fit: cover;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+.offcanvas-filter-section {
+    padding: 1rem 0;
+}
+.offcanvas-filter-section h6 {
+    cursor: pointer;
+}
+.color-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.color-circle.active {
+  border: 2px solid yellow;
+}

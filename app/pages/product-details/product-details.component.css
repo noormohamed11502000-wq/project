@@ -1,0 +1,45 @@
+/* دائرة اللون */
+.color-circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.color-circle.selected {
+  border-color: #000;
+}
+
+/* زر الاعجاب */
+.btn-like {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #e74c3c; /* لون القلب الأحمر */
+  transition: all 0.3s;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-like:hover {
+  background-color: #e74c3c; /* خلفية حمراء عند hover */
+  color: #fff; /* القلب أبيض */
+  transform: scale(1.1); /* تكبير خفيف */
+  border-color: #e74c3c;
+}
+
+/* تباعد بين الأزرار */
+.d-flex .btn {
+  margin-right: 0.5rem;
+}
+
+/* صور المنتج */
+.main-img {
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}

@@ -1,0 +1,22 @@
+.title {
+  font-size: 32px;
+  font-weight: bold;
+
+}
+
+.search {
+  border-radius:62px !important;
+  box-shadow: none !important;
+  background-color: #f0f0f0;
+}
+
+.navbar-nav {
+  width: 321px;
+}
+
+
+@media (max-width:345px) {
+  .title {
+    font-size: 10px ;
+  }
+}

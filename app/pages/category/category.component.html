@@ -1,0 +1,240 @@
+<div class="bg-light p-4 p-md-5">
+  <div class="container-fluid">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#" class="text-secondary text-decoration-none">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Casual</li>
+      </ol>
+    </nav>
+
+    <div class="row g-4">
+      <!-- Filters Section (Left Column) -->
+      <div class="col-12 col-lg-3 d-none d-lg-block">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="fw-bold m-0">Filters</h5>
+          <i class="bi bi-funnel"></i>
+        </div>
+        <div class="card p-3">
+          <div class="filter-section">
+            @for (cat of ourCategories; track cat.id) {
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="fw-semibold mb-0">{{ cat.name }}</h6>
+              <input class="form-check-input" type="radio" name="category" [value]="cat.id"
+                [(ngModel)]="selectedCategoryId">
+            </div>
+            }
+          </div>
+
+          <!-- Filters - Price -->
+          <div class="filter-section">
+            <h6 class="fw-semibold">Price</h6>
+            <div class="d-flex justify-content-between mt-2">
+              <span>${{lowPrice}}</span>
+              <span>${{ selectedPrice }}</span>
+              <span>${{highPrice}}</span>
+            </div>
+            <input type="range" class="form-range price-range-slider" [min]="lowPrice" [max]="highPrice" value="100"
+              [(ngModel)]="selectedPrice">
+          </div>
+
+          <!-- Filters - Colors -->
+          <div class="filter-section">
+            <h6 class="fw-semibold">Colors</h6>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <div *ngFor="let color of colors" class="color-circle" [class.active]="selectedColor === color.name"
+                [style.background-color]="color.value" (click)="selectedColor = color.name">
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters - Size -->
+          <div class="filter-section">
+            <h6 class="fw-semibold">Size</h6>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              @for(item of sizes; track item.key) {
+              <button class="btn btn-outline-secondary size-btn"
+                [ngClass]="{'bg-warning text-dark': selectedSize === item.value}" (click)="selectSize(item.value)">
+                {{ item.key }}
+              </button>
+              }
+            </div>
+          </div>
+
+          <!-- Filters - Dress Style -->
+          <div class="filter-section border-0">
+            <h6 class="fw-semibold">Dress Style</h6>
+            @for (item of styles; track item.key) {
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <p class="mb-1 text-secondary">{{ item.key }}</p>
+              <input class="form-check-input" type="radio" name="style" [value]="item.value"
+                [(ngModel)]="selectedStyleId">
+            </div>
+            }
+          </div>
+
+          <button class="btn btn-dark w-100 rounded-pill mt-3" (click)="applyFilter()">Apply Filter</button>
+        </div>
+      </div>
+
+      <!-- Products Section (Right Column) -->
+      <div class="col-12 col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 class="fw-bold m-0">Casual</h1>
+          <div class="d-flex align-items-center mt-3 mt-md-0 d-none d-md-flex">
+            <span class="text-secondary me-2">Showing 1-5 of {{numberOfTotalProducts}} Products</span>
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary dropdown-toggle rounded-pill" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Sort by: Most Popular
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" (click)="sortByLowPrice()">Price: Low to High</a></li>
+                <li><a class="dropdown-item" (click)="sortByHighPrice()">Price: High to Low</a></li>
+                <li><a class="dropdown-item" (click)="sortByLowDiscount()">Discount</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- Filter icon for mobile -->
+          <button class="btn btn-outline-secondary d-md-none rounded-pill" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#filtersOffcanvas" aria-controls="filtersOffcanvas">
+            <i class="bi bi-funnel"></i>
+          </button>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
+          @for(product of products ; track product.id){
+          <div class="col">
+            <div class="card h-100">
+              <img [src]="product.imagePath[0]" class="card-img-top product-img" alt="image not available">
+              <div class="card-body p-3">
+                <h6 class="fw-semibold mb-1">{{product.name}}</h6>
+                <div class="mb-2">
+                  <ng-container *ngFor="let star of [1,2,3,4,5]; let i=index">
+                    <i class="bi" [ngClass]="{
+                      'bi-star-fill text-warning': i < product.rate,
+                      'bi-star text-secondary': i >= product.rate
+                    }"></i>
+                  </ng-container>
+                </div>
+                <p class="card-text fw-bold fs-5 mb-0">${{product.price}}</p>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation" class="mt-4">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link rounded-pill px-3" href="#">&larr; Previous</a>
+            </li>
+            <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
+            <li class="page-item d-none d-sm-block"><a class="page-link" href="#">...</a></li>
+            <li class="page-item d-none d-sm-block"><a class="page-link" href="#">8</a></li>
+            <li class="page-item d-none d-sm-block"><a class="page-link" href="#">9</a></li>
+            <li class="page-item d-none d-sm-block"><a class="page-link" href="#">10</a></li>
+            <li class="page-item">
+              <a class="page-link rounded-pill px-3" href="#">Next &rarr;</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Offcanvas for Mobile Filters -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="filtersOffcanvas" aria-labelledby="filtersOffcanvasLabel">
+    <div class="offcanvas-header border-bottom">
+      <h5 class="offcanvas-title fw-bold" id="filtersOffcanvasLabel">Filters</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <!-- Filters - Categories -->
+      <div class="offcanvas-filter-section border-bottom" data-bs-toggle="collapse" data-bs-target="#collapseCategories"
+        aria-expanded="true" aria-controls="collapseCategories">
+        <h6 class="fw-semibold d-flex justify-content-between align-items-center mb-0">Categories <i
+            class="bi bi-chevron-down"></i></h6>
+        <div class="collapse show" id="collapseCategories">
+          @for (cat of ourCategories; track cat.id) {
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h6 class="fw-semibold mb-0">{{ cat.name }}</h6>
+            <input class="form-check-input" type="radio" name="category" [value]="cat.id"
+              [(ngModel)]="selectedCategoryId">
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Filters - Price -->
+      <div class="offcanvas-filter-section border-bottom" data-bs-toggle="collapse" data-bs-target="#collapsePrice"
+        aria-expanded="true" aria-controls="collapsePrice">
+        <h6 class="fw-semibold d-flex justify-content-between align-items-center mb-0">Price <i
+            class="bi bi-chevron-down"></i></h6>
+        <div class="collapse show" id="collapsePrice">
+          <div class="d-flex justify-content-between mt-2">
+            <span>${{lowPrice}}</span>
+            <span>${{ selectedPrice }}</span>
+            <span>${{highPrice}}</span>
+          </div>
+          <input type="range" class="form-range price-range-slider" [min]="lowPrice" [max]="highPrice" value="100"
+            [(ngModel)]="selectedPrice">
+        </div>
+      </div>
+
+      <!-- Filters - Colors -->
+      <div class="offcanvas-filter-section border-bottom" data-bs-toggle="collapse" data-bs-target="#collapseColors"
+        aria-expanded="true" aria-controls="collapseColors">
+        <h6 class="fw-semibold d-flex justify-content-between align-items-center mb-0">Colors <i
+            class="bi bi-chevron-down"></i></h6>
+        <div class="collapse show" id="collapseColors">
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <div *ngFor="let color of colors" class="color-circle" [class.active]="selectedColor === color.name"
+              [style.background-color]="color.value" (click)="selectedColor = color.name">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters - Size -->
+      <div class="offcanvas-filter-section border-bottom" data-bs-toggle="collapse" data-bs-target="#collapseSize"
+        aria-expanded="true" aria-controls="collapseSize">
+        <h6 class="fw-semibold d-flex justify-content-between align-items-center mb-0">Size <i
+            class="bi bi-chevron-down"></i></h6>
+        <div class="collapse show" id="collapseSize">
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            @for(item of sizes; track item.key) {
+            <button class="btn btn-outline-secondary size-btn"
+              [ngClass]="{'bg-warning text-dark': selectedSize === item.value}" (click)="selectSize(item.value)">
+              {{ item.key }}
+            </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters - Dress Style -->
+      <div class="offcanvas-filter-section border-0" data-bs-toggle="collapse" data-bs-target="#collapseDressStyle"
+        aria-expanded="true" aria-controls="collapseDressStyle">
+        <h6 class="fw-semibold d-flex justify-content-between align-items-center mb-0">Dress Style <i
+            class="bi bi-chevron-down"></i></h6>
+        <div class="collapse show" id="collapseDressStyle">
+          @for (item of styles; track item.key) {
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <p class="mb-1 text-secondary">{{ item.key }}</p>
+            <input class="form-check-input" type="radio" name="style" [value]="item.value"
+              [(ngModel)]="selectedStyleId">
+          </div>
+          }
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-dark w-100 rounded-pill mt-3" (click)="applyFilter()"
+        data-bs-dismiss="offcanvas">Apply Filter</button>
+    </div>
+  </div>
+</div>

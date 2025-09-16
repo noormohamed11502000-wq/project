@@ -1,0 +1,29 @@
+<div class="search-box">
+  <input 
+    type="text" 
+    [(ngModel)]="searchTerm"
+     placeholder="ابحث عن منتج..."
+  />
+</div>
+
+<div class="products-grid">
+  <app-product-card
+  *ngFor="let product of paginatedProducts"
+  [product]="product"
+  (buyAction)="buyProduct(product)">
+</app-product-card>
+</div>
+
+<div class="pagination">
+  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+    السابق
+  </button>
+  
+  <span>صفحة {{currentPage}}</span>
+  
+  <button 
+    (click)="changePage(currentPage + 1)" 
+    [disabled]="currentPage * itemsPerPage >= filteredProducts.length">
+    التالي
+  </button>
+</div>

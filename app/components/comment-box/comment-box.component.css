@@ -1,0 +1,21 @@
+.review-card {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: #fff;
+  max-width: 400px;
+}
+.review-card .stars {
+  color: #ffc107; /* Bootstrap yellow */
+  font-size: 1.2rem;
+}
+.review-card .verified {
+  color: green;
+  font-size: 1rem;
+  margin-left: 5px;
+}
+.review-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 0.5rem;
+}

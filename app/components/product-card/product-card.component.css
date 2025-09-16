@@ -1,0 +1,44 @@
+.product-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.btn-details {
+  white-space: nowrap;
+}
+
+.btn-like {
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.btn-like i {
+  color: #e74c3c; /* لون القلب الأحمر الافتراضي */
+  transition: color 0.3s, transform 0.2s;
+}
+
+.btn-like:hover i {
+  color: #fff; /* يصبح أبيض عند hover */
+  transform: scale(1.2); /* تكبير صغير */
+}
+
